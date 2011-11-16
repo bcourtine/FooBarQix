@@ -18,8 +18,14 @@ class RuleProcessor(
     null
 
   def modulo(n: Int): String =
-    null
+    (n % i) match {
+      case 0 => replace
+      case _ => ""
+    }
 
   def contains(n: Int): String =
-    null
+    if (n.toString.contains(i.toString))
+      replace
+    else
+      ""
 }
