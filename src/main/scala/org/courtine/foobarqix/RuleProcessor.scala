@@ -15,7 +15,7 @@ class RuleProcessor(
 ) {
 
   def processNumber(n: Int): String =
-    null
+    modulo(n) + contains(n)
 
   def modulo(n: Int): String =
     (n % i) match {
