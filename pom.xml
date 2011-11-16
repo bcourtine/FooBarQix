@@ -4,7 +4,7 @@
 
   <groupId>org.courtine</groupId>
   <artifactId>foobarqix</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <packaging>jar</packaging>
 
   <name>Projet de qualification FooBarQix pour Devoxx France 2012</name>
