@@ -10,9 +10,20 @@ package org.courtine.foobarqix
  * @version 2011-11-16.
  */
 class RuleProcessor(
-    val i: Int, // Chiffre testé (modulo et contenu).
-    val replace: String // Chaîne de remplacement.
+    val i:Int, // Chiffre testé.
+    val replace: String, // Chaîne de remplacment.
+    val iChar: Char // Caractère représentant le chiffre testé pour le test de contenu.
 ) {
+
+  def this(i: Int, replace: String) {
+    this(i, replace, i.toString.apply(0))
+    check(i)
+  }
+
+  def check(i: Int) {
+    if (i < 1 || i > 9)
+      throw new IllegalArgumentException("Le chiffre doit \u00EAtre compris entre 1 et 9")
+  }
 
   /**
    * Application de l'ensemble des deux sous-règles à un nombre. Si les deux règles s'appliquent
@@ -31,9 +42,14 @@ class RuleProcessor(
       case _ => ""
     }
 
-  def contains(n: Int): String =
-    if (n.toString.contains(i.toString))
-      replace
-    else
-      ""
+  def contains(n: Int): String = {
+    val charCount = n.toString.count(_ == iChar)
+    containsRec(charCount)
+  }
+
+  private def containsRec(count: Int): String =
+    count match {
+      case 0 => ""
+      case n => replace + containsRec(n-1)
+    }
 }

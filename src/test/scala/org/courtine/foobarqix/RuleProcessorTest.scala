@@ -110,4 +110,15 @@ class RuleProcessorTest {
     assertEquals("FooFooFoo", TEST_RULE_PROCESSOR.processNumber(3531))
     assertEquals("FooFooFooFoo", TEST_RULE_PROCESSOR.processNumber(333))
   }
+
+  @Test
+  def RuleProcessorConstructorNotOk() {
+    try {
+      new RuleProcessor(10, "")
+      fail("Une IllegalArgumentException est attendue.")
+    } catch {
+      case _: IllegalArgumentException => // ok.
+      case _ => fail("Une IllegalArgumentException est attendue.")
+    }
+  }
 }
