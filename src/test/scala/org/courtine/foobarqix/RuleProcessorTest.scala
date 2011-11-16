@@ -27,6 +27,18 @@ class RuleProcessorTest {
   /** Liste de nombres contenant le chiffre 3. */
   val CONTAINS_OK = List.range(1, 1000).filter(_.toString.contains("3"))
 
+  /** Liste de valeurs ne validant aucune des deux parties de la règle. */
+  val BOTH_NOT_OK = MODULO_NOT_OK.intersect(CONTAINS_NOT_OK)
+
+  /** Liste de valeurs validant uniquement la règle "contains". */
+  val CONTAINS_ONLY_OK = CONTAINS_OK.intersect(MODULO_NOT_OK)
+
+  /** Liste de valeurs validant uniquement la règle "module". */
+  val MODULO_ONLY_OK = MODULO_OK.intersect(CONTAINS_NOT_OK)
+
+  /** Liste de valeurs validant les deux règles. */
+  val BOTH_OK = CONTAINS_OK.intersect(MODULO_OK)
+
   @Test
   def moduloNotOk() {
     MODULO_NOT_OK.foreach(
@@ -52,6 +64,34 @@ class RuleProcessorTest {
   def containsOk() {
     CONTAINS_OK.foreach(
       n => assertEquals("Foo", TEST_RULE_PROCESSOR.contains(n))
+    )
+  }
+
+  @Test
+  def ruleNotOk() {
+    BOTH_NOT_OK.foreach(
+      n => assertEquals("", TEST_RULE_PROCESSOR.processNumber(n))
+    )
+  }
+
+  @Test
+  def ruleContainsOnlyOk() {
+    CONTAINS_ONLY_OK.foreach(
+      n => assertEquals("Foo", TEST_RULE_PROCESSOR.processNumber(n))
+    )
+  }
+
+  @Test
+  def ruleModuloOnlyOk() {
+    MODULO_ONLY_OK.foreach(
+      n => assertEquals("Foo", TEST_RULE_PROCESSOR.processNumber(n))
+    )
+  }
+
+  @Test
+  def bothModuloAndContainsOk() {
+    BOTH_OK.foreach(
+      n => assertEquals("FooFoo", TEST_RULE_PROCESSOR.processNumber(n))
     )
   }
 }
