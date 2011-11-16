@@ -14,6 +14,14 @@ class RuleProcessor(
     val replace: String // Chaîne de remplacement.
 ) {
 
+  /**
+   * Application de l'ensemble des deux sous-règles à un nombre. Si les deux règles s'appliquent
+   * en même temps, leurs résultats sont concaténés.
+   *
+   * @param n Nombre à traiter
+   * @return Chaîne correspondant à l'application des deux sous-règles (modulo et contenu). Si le
+   *         nombre ne valide aucune de ces règles, la chaîne vide est renvoyée.
+   */
   def processNumber(n: Int): String =
     modulo(n) + contains(n)
 
