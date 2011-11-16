@@ -24,8 +24,8 @@ class RuleProcessorTest {
   /** Liste de nombres ne contenant pas le chiffre 3. */
   val CONTAINS_NOT_OK = List.range(1, 1000).filter(!_.toString.contains("3"))
 
-  /** Liste de nombres contenant le chiffre 3. */
-  val CONTAINS_OK = List.range(1, 1000).filter(_.toString.contains("3"))
+  /** Liste de nombres contenant le chiffre 3 une unique fois. */
+  val CONTAINS_OK = List.range(1, 1000).filter(_.toString.count(_ == '3') == 1)
 
   /** Liste de valeurs ne validant aucune des deux parties de la règle. */
   val BOTH_NOT_OK = MODULO_NOT_OK.intersect(CONTAINS_NOT_OK)
@@ -93,5 +93,21 @@ class RuleProcessorTest {
     BOTH_OK.foreach(
       n => assertEquals("FooFoo", TEST_RULE_PROCESSOR.processNumber(n))
     )
+  }
+
+  @Test
+  def containsMultiple() {
+    assertEquals("Foo", TEST_RULE_PROCESSOR.processNumber(31))
+    assertEquals("FooFoo", TEST_RULE_PROCESSOR.processNumber(331))
+    assertEquals("FooFoo", TEST_RULE_PROCESSOR.processNumber(3731))
+    assertEquals("FooFooFoo", TEST_RULE_PROCESSOR.processNumber(3331))
+  }
+
+  @Test
+  def containsMultipleAndDivisible() {
+    assertEquals("FooFoo", TEST_RULE_PROCESSOR.processNumber(3))
+    assertEquals("FooFooFoo", TEST_RULE_PROCESSOR.processNumber(33))
+    assertEquals("FooFooFoo", TEST_RULE_PROCESSOR.processNumber(3531))
+    assertEquals("FooFooFooFoo", TEST_RULE_PROCESSOR.processNumber(333))
   }
 }
