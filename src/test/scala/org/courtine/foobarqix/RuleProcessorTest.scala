@@ -27,5 +27,31 @@ class RuleProcessorTest {
   /** Liste de nombres contenant le chiffre 3. */
   val CONTAINS_OK = List.range(1, 1000).filter(_.toString.contains("3"))
 
+  @Test
+  def moduloNotOk() {
+    MODULO_NOT_OK.foreach(
+      n => assertEquals("", TEST_RULE_PROCESSOR.modulo(n))
+    )
+  }
 
+  @Test
+  def moduloOk() {
+    MODULO_OK.foreach(
+      n => assertEquals("Foo", TEST_RULE_PROCESSOR.modulo(n))
+    )
+  }
+
+  @Test
+  def containsNotOk() {
+    CONTAINS_NOT_OK.foreach(
+      n => assertEquals("", TEST_RULE_PROCESSOR.contains(n))
+    )
+  }
+
+  @Test
+  def containsOk() {
+    CONTAINS_OK.foreach(
+      n => assertEquals("Foo", TEST_RULE_PROCESSOR.contains(n))
+    )
+  }
 }
