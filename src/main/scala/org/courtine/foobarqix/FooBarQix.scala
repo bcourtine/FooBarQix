@@ -9,6 +9,12 @@ package org.courtine.foobarqix
  */
 object FooBarQix {
 
+  def main(args: Array[String]) {
+    List.range(1, 100) foreach {
+      n => println(process(n))
+    }
+  }
+
   def process(n: Int): String = {
     modulo3(n) + modulo5(n) + modulo7(n) + contains(n.toString.toList) match {
       case "" => n.toString
